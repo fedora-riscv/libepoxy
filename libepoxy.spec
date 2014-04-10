@@ -1,12 +1,12 @@
-%global gitdate 20140307
+%global gitdate 20140411
 
-%global commit d4ad80fb8e7c85c4df455ade75f8dd78579c4d7c
+%global commit 6eb075c70e2f91a9c45a90677bd46e8fb0432655
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Summary: Direct Rendering Manager runtime library
 Name: libepoxy
 Version: 1.2
-Release: 0.1.%{gitdate}git%{shortcommit}%{?dist}
+Release: 0.2.%{gitdate}git%{shortcommit}%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -60,6 +60,9 @@ make check
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Fri Apr 11 2014 Dave Airlie <airlied@redhat.com> 1.2-0.2.20140411git6eb075c
+- update to latest git snapshot
+
 * Thu Mar 27 2014 Dave Airlie <airlied@redhat.com> 1.2-0.1.20140307gitd4ad80f
 - initial git snapshot
 
