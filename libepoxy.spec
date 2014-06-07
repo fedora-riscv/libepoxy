@@ -6,7 +6,7 @@
 Summary: Direct Rendering Manager runtime library
 Name: libepoxy
 Version: 1.2
-Release: 0.2.%{gitdate}git%{shortcommit}%{?dist}
+Release: 0.3.%{gitdate}git%{shortcommit}%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -60,6 +60,9 @@ make check
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-0.3.20140411git6eb075c
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Fri Apr 11 2014 Dave Airlie <airlied@redhat.com> 1.2-0.2.20140411git6eb075c
 - update to latest git snapshot
 
