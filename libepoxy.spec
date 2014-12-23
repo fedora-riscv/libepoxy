@@ -16,7 +16,6 @@ Source0: https://github.com/anholt/libepoxy/archive/%{commit}/v%{version}.tar.gz
 BuildRequires: automake autoconf libtool
 BuildRequires: mesa-libGL-devel
 BuildRequires: mesa-libEGL-devel
-BuildRequires: mesa-libGLES-devel
 BuildRequires: xorg-x11-util-macros
 BuildRequires: python
 
