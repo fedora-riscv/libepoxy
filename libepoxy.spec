@@ -18,7 +18,7 @@ BuildRequires: mesa-libGL-devel
 BuildRequires: mesa-libEGL-devel
 BuildRequires: mesa-libGLES-devel
 BuildRequires: xorg-x11-util-macros
-BuildRequires: python3
+BuildRequires: python
 
 %description
 A library for handling OpenGL function pointer management.
