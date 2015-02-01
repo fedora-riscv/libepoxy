@@ -6,7 +6,7 @@
 Summary: Direct Rendering Manager runtime library
 Name: libepoxy
 Version: 1.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -34,7 +34,7 @@ This package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -a 1
+%setup -T -q -b 1
 
 %build
 autoreconf -vif || exit 1
@@ -50,7 +50,7 @@ find $RPM_BUILD_ROOT -type f -name '*.la' -delete -print
 %check
 # In theory this is fixed in 1.2 but we still see errors on most platforms
 # https://github.com/anholt/libepoxy/issues/24
-%ifnarch %{arm} aarch64 %{power64} s390x
+%ifnarch %{arm} aarch64 ppc64 s390x
 make check
 %else
 make check ||:
@@ -71,6 +71,9 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Sun Feb 01 2015 Dave Airlie <airlied@redhat.com> 1.2-2
+- fixup for EPEL6
+
 * Mon Oct 13 2014 Peter Robinson <pbrobinson@fedoraproject.org> 1.2.0-1
 - Update to 1.2 GA
 - Don't fail build on make check failure for some architectures
