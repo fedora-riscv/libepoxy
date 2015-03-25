@@ -3,10 +3,10 @@
 #global commit 6eb075c70e2f91a9c45a90677bd46e8fb0432655
 #global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Summary: Direct Rendering Manager runtime library
+Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -19,6 +19,10 @@ BuildRequires: mesa-libEGL-devel
 BuildRequires: mesa-libGLES-devel
 BuildRequires: xorg-x11-util-macros
 BuildRequires: python3
+
+Patch1: 0001-Use-the-EGL-pkgconfig-for-finding-eglplatform.h.patch
+Patch2: 0002-Fix-context-type-detection-if-we-find-eglGetCurrentC.patch
+Patch3: 0003-Avoid-name-conflicts-between-pkgconfig-s-EGL_LIBS-an.patch
 
 %description
 A library for handling OpenGL function pointer management.
@@ -33,6 +37,9 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 autoreconf -vif || exit 1
@@ -69,6 +76,10 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Wed Mar 25 2015 Adam Jackson <ajax@redhat.com> 1.2-2
+- Fix description to not talk about DRM
+- Sync some small bugfixes from git
+
 * Mon Oct 13 2014 Peter Robinson <pbrobinson@fedoraproject.org> 1.2.0-1
 - Update to 1.2 GA
 - Don't fail build on make check failure for some architectures
