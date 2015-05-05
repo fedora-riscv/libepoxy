@@ -6,7 +6,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -24,6 +24,8 @@ Patch1: 0001-Use-the-EGL-pkgconfig-for-finding-eglplatform.h.patch
 Patch2: 0002-Fix-context-type-detection-if-we-find-eglGetCurrentC.patch
 Patch3: 0003-Avoid-name-conflicts-between-pkgconfig-s-EGL_LIBS-an.patch
 
+Patch4: update-registry.patch
+
 %description
 A library for handling OpenGL function pointer management.
 
@@ -40,6 +42,7 @@ developing applications that use %{name}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 autoreconf -vif || exit 1
@@ -76,6 +79,9 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Tue May 05 2015 Dave Airlie <airlied@redhat.com> 1.2-3
+- update GL registry files (add new EGL extension)
+
 * Wed Mar 25 2015 Adam Jackson <ajax@redhat.com> 1.2-2
 - Fix description to not talk about DRM
 - Sync some small bugfixes from git
