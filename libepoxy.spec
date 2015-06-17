@@ -6,7 +6,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -79,6 +79,9 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Tue May 05 2015 Dave Airlie <airlied@redhat.com> 1.2-3
 - update GL registry files (add new EGL extension)
 
