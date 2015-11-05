@@ -1,17 +1,17 @@
 #global gitdate 20140411
 
-#global commit 6eb075c70e2f91a9c45a90677bd46e8fb0432655
+%global commit e2c33af5bfcfc9d168f9e776156dd47c33f428b3
 #global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.2
-Release: 4%{?dist}
+Version: 1.3.1
+Release: 1%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
 #ource0: https://github.com/anholt/libepoxy/archive/%{commit}/%{name}-%{commit}.tar.gz
-Source0: https://github.com/anholt/libepoxy/archive/%{commit}/v%{version}.tar.gz
+Source0: https://github.com/anholt/libepoxy/archive/v%{version}/v%{version}.tar.gz
 
 BuildRequires: automake autoconf libtool
 BuildRequires: mesa-libGL-devel
@@ -19,12 +19,6 @@ BuildRequires: mesa-libEGL-devel
 BuildRequires: mesa-libGLES-devel
 BuildRequires: xorg-x11-util-macros
 BuildRequires: python3
-
-Patch1: 0001-Use-the-EGL-pkgconfig-for-finding-eglplatform.h.patch
-Patch2: 0002-Fix-context-type-detection-if-we-find-eglGetCurrentC.patch
-Patch3: 0003-Avoid-name-conflicts-between-pkgconfig-s-EGL_LIBS-an.patch
-
-Patch4: update-registry.patch
 
 %description
 A library for handling OpenGL function pointer management.
@@ -39,10 +33,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 autoreconf -vif || exit 1
@@ -79,6 +69,9 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Nov 05 2015 Adam Jackson <ajax@redhat.com> 1.3.1-1
+- libepoxy 1.3.1
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
