@@ -6,7 +6,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.3.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
@@ -72,6 +72,9 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Fri Sep 23 2016 Adam Jackson <ajax@redhat.com> - 1.3.1-3
 - Fix detection of EGL client extensions
 
