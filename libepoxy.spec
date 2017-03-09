@@ -5,15 +5,13 @@
 
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.3.1
-Release: 4%{?dist}
+Version: 1.4.1
+Release: 1%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
 # github url - generated archive
 #ource0: https://github.com/anholt/libepoxy/archive/%{commit}/%{name}-%{commit}.tar.gz
-Source0: https://github.com/anholt/libepoxy/archive/v%{version}/v%{version}.tar.gz
-
-Patch0: 0001-egl-Be-somewhat-aware-of-EGL-client-extensions.patch
+Source0: https://github.com/anholt/libepoxy/archive/libepoxy-%{version}.tar.gz
 
 BuildRequires: automake autoconf libtool
 BuildRequires: mesa-libGL-devel
@@ -35,7 +33,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .clientext
 
 %build
 autoreconf -vif || exit 1
@@ -72,6 +69,9 @@ make check ||:
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Mar 09 2017 Dave Airlie <airlied@redhat.com> - 1.4.1-1
+- libepoxy 1.4.1
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
