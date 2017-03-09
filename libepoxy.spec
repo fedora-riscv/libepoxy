@@ -1,24 +1,24 @@
-#global gitdate 20140411
-
-%global commit e2c33af5bfcfc9d168f9e776156dd47c33f428b3
-#global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.4.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
 URL: http://github.com/anholt/libepoxy
-# github url - generated archive
-#ource0: https://github.com/anholt/libepoxy/archive/%{commit}/%{name}-%{commit}.tar.gz
-Source0: https://github.com/anholt/libepoxy/archive/libepoxy-%{version}.tar.gz
+Source0: %{url}/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: automake autoconf libtool
-BuildRequires: mesa-libGL-devel
-BuildRequires: mesa-libEGL-devel
-BuildRequires: mesa-libGLES-devel
-BuildRequires: xorg-x11-util-macros
-BuildRequires: python3
+Patch0001:      0001-Add-C-guards-around-generated-headers.patch
+Patch0002:      0002-Add-z-relro-and-z-now-to-the-GCC-linker-flags.patch
+Patch0003:      0003-Add-explicit-version-flags-for-macOS-builds.patch
+Patch0004:      0004-Use-some-linker-flags-only-on-Linux.patch
+Patch0005:      0005-Add-missing-visibility-compiler-flags.patch
+Patch0006:      0006-Prefer-using-pkg-config-files-to-find-GLES.patch
+
+BuildRequires:  meson
+BuildRequires:  gcc
+BuildRequires:  pkgconfig(gl)
+BuildRequires:  pkgconfig(egl)
+BuildRequires:  pkgconfig(glesv2)
+BuildRequires:  python3
 
 %description
 A library for handling OpenGL function pointer management.
@@ -32,43 +32,37 @@ This package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
-autoreconf -vif || exit 1
-%configure --disable-silent-rules
-make %{?_smp_mflags}
+%meson
+%meson_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-
-# NOTE: We intentionally don't ship *.la files
-find $RPM_BUILD_ROOT -type f -name '*.la' -delete -print
+%meson_install
 
 %check
-# In theory this is fixed in 1.2 but we still see errors on most platforms
-# https://github.com/anholt/libepoxy/issues/24
-%ifnarch %{arm} aarch64 %{power64} s390x
-make check
-%else
-make check ||:
-%endif
+%meson_test
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
+%license COPYING
 %doc README.md
-%{_libdir}/libepoxy.so.0
-%{_libdir}/libepoxy.so.0.0.0
+%{_libdir}/libepoxy.so.0*
 
 %files devel
-%dir %{_includedir}/epoxy/
-%{_includedir}/epoxy/*
+%{_includedir}/epoxy/
 %{_libdir}/libepoxy.so
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Mar 09 2017 Igor Gnatenko <ignatenko@redhat.com> - 1.4.1-2
+- Switch to meson
+- Add license file
+- Simplify spec
+
 * Thu Mar 09 2017 Dave Airlie <airlied@redhat.com> - 1.4.1-1
 - libepoxy 1.4.1
 

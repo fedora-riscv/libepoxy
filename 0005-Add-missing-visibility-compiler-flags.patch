@@ -1,0 +1,68 @@
+From 4719e586c0f92fa7546fa954115b92d2ae9aee9f Mon Sep 17 00:00:00 2001
+From: Emmanuele Bassi <ebassi@gnome.org>
+Date: Thu, 9 Mar 2017 21:21:09 +0000
+Subject: [PATCH 5/6] Add missing visibility compiler flags
+
+We have been building the shared library for Epoxy without the symbol
+visibility flags for the compiler, which means we've been leaking
+internal symbols all over the floor.
+
+Fixes: #111
+---
+ meson.build     | 10 ++++++----
+ src/meson.build |  4 +---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 95aac5c..afe576b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -140,9 +140,11 @@ foreach cflag: test_cflags
+   endif
+ endforeach
+ 
+-# Visibility compiler flags
+-visibility_cflags = []
+-if get_option('default_library') != 'static'
++libtype = get_option('default_library')
++
++# Visibility compiler flags; we only use this for shared libraries
++if libtype == 'shared'
++  visibility_cflags = []
+   if host_system == 'windows'
+     conf.set('DLL_EXPORT', true)
+     if cc.get_id() == 'msvc'
+@@ -152,7 +154,7 @@ if get_option('default_library') != 'static'
+       visibility_cflags += [ '-fvisibility=hidden' ]
+     endif
+   else
+-    conf.set('EPOXY_PUBLIC', '__attribute__((visibility("default")))')
++    conf.set('EPOXY_PUBLIC', '__attribute__((visibility("default"))) extern')
+     visibility_cflags += [ '-fvisibility=hidden' ]
+   endif
+ endif
+diff --git a/src/meson.build b/src/meson.build
+index a3d76db..ce6fe45 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -68,8 +68,6 @@ if host_system == 'windows'
+ endif
+ 
+ # Allow building a static version of epoxy
+-libtype = get_option('default_library')
+-
+ if libtype != 'shared'
+   libepoxy_static = static_library('epoxy',
+                                    sources: epoxy_sources + epoxy_headers,
+@@ -88,7 +86,7 @@ if libtype != 'static'
+                                    install: true,
+                                    dependencies: epoxy_deps,
+                                    include_directories: libepoxy_inc,
+-                                   c_args: common_cflags,
++                                   c_args: common_cflags + visibility_cflags,
+                                    link_args: common_ldflags)
+   libepoxy = libepoxy_shared
+ endif
+-- 
+2.12.0
+
