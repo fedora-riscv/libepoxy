@@ -1,17 +1,10 @@
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.4.1
-Release: 2%{?dist}
+Version: 1.4.3
+Release: 1%{?dist}
 License: MIT
-URL: http://github.com/anholt/libepoxy
-Source0: %{url}/archive/%{name}-%{version}.tar.gz
-
-Patch0001:      0001-Add-C-guards-around-generated-headers.patch
-Patch0002:      0002-Add-z-relro-and-z-now-to-the-GCC-linker-flags.patch
-Patch0003:      0003-Add-explicit-version-flags-for-macOS-builds.patch
-Patch0004:      0004-Use-some-linker-flags-only-on-Linux.patch
-Patch0005:      0005-Add-missing-visibility-compiler-flags.patch
-Patch0006:      0006-Prefer-using-pkg-config-files-to-find-GLES.patch
+URL: https://github.com/anholt/libepoxy
+Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -65,6 +58,9 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Jul 13 2017 Adam Jackson <ajax@redhat.com> - 1.4.3-1
+- libepoxy 1.4.3
+
 * Thu Mar 09 2017 Igor Gnatenko <ignatenko@redhat.com> - 1.4.1-2
 - Switch to meson
 - Add license file
