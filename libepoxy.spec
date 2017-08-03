@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.4.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -58,6 +58,9 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
