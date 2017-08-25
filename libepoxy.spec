@@ -1,10 +1,14 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.4.3
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+## upstream patches
+# fix interactions with older mesa (like f25)
+Patch3: 0003-Add-fallback-definition-for-EGL_CAST.patch
 
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -58,6 +62,9 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Aug 24 2017 Rex Dieter <rdieter@fedoraproject.org> - 1.4.3-1.1
+- Add fallback definition for EGL_CAST (f25 branch commit)
+
 * Thu Jul 13 2017 Adam Jackson <ajax@redhat.com> - 1.4.3-1
 - libepoxy 1.4.3
 
