@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.4.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -12,6 +12,12 @@ BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glesv2)
 BuildRequires:  python3
+
+Patch1: 0001-dispatch-Learn-about-glvnd.patch
+Patch2: 0002-dispatch-Don-t-reference-glvnd-defines-on-non-glvnd-.patch
+Patch3: 0003-dispatch-Use-epoxy_conservative_glx_dlsym-when-probi.patch
+Patch4: 0004-dispatch-Be-more-paranoid-about-detecting-GLX-or-not.patch
+Patch5: 0005-dispatch-Fix-the-libOpenGL-soname.patch
 
 %description
 A library for handling OpenGL function pointer management.
@@ -58,6 +64,9 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Fri Sep 22 2017 Adam Jackson <ajax@redhat.com> - 1.4.3-4
+- Backport some useful bits from master
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
