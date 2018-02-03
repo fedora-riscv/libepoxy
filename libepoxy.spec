@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.4.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -50,8 +50,7 @@ developing applications that use %{name}.
   ;
 %endif
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
 %license COPYING
@@ -64,6 +63,9 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Sat Feb 03 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.4.3-5
+- Switch to %%ldconfig_scriptlets
+
 * Fri Sep 22 2017 Adam Jackson <ajax@redhat.com> - 1.4.3-4
 - Backport some useful bits from master
 
