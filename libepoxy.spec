@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.5.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -12,6 +12,10 @@ BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glesv2)
 BuildRequires:  python3
+BuildRequires:  xorg-x11-server-Xvfb mesa-dri-drivers
+
+# https://github.com/anholt/libepoxy/pull/167
+Patch0: 0001-test-glx_public_api_core-Fail-softer-if-core-context.patch
 
 %description
 A library for handling OpenGL function pointer management.
@@ -35,14 +39,10 @@ developing applications that use %{name}.
 %meson_install
 
 %check
-# In theory this is fixed in 1.2 but we still see errors on most platforms
-# https://github.com/anholt/libepoxy/issues/24
-%meson_test \
-%ifarch %{arm} aarch64 %{power64} s390x
-  || :
-%else
-  ;
-%endif
+# this should be %%meson_test but the macro expands with a bajillion
+# embedded newlines for no obvious reason
+xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
+    (cat %{_vpath_builddir}/meson-logs/testlog.txt ; exit 1)
 
 %ldconfig_scriptlets
 
@@ -57,6 +57,10 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Wed Apr 25 2018 Adam Jackson <ajax@redhat.com> - 1.5.1-2
+- Enable tests for all arches
+- Run tests against Xvfb so we get plausible amounts of coverage
+
 * Wed Apr 25 2018 Kalev Lember <klember@redhat.com> - 1.5.1-1
 - Update to 1.5.1
 
