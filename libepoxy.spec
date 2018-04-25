@@ -1,6 +1,6 @@
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.5.0
+Version: 1.5.1
 Release: 1%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
@@ -57,6 +57,9 @@ developing applications that use %{name}.
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Wed Apr 25 2018 Kalev Lember <klember@redhat.com> - 1.5.1-1
+- Update to 1.5.1
+
 * Wed Feb 28 2018 Kalev Lember <klember@redhat.com> - 1.5.0-1
 - Update to 1.5.0
 
