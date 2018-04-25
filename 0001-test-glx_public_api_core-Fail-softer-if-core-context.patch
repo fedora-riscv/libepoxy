@@ -1,0 +1,60 @@
+From 6ac91edcc78e7aad95fd026bad8e18eda4ee2999 Mon Sep 17 00:00:00 2001
+From: Adam Jackson <ajax@redhat.com>
+Date: Wed, 25 Apr 2018 12:13:01 -0400
+Subject: [PATCH] test/glx_public_api_core: Fail softer if core contexts aren't
+ available
+
+If you've built Mesa with --disable-texture-float, and try to run the
+tests against Xvfb, glx_public_api_core will fail: creating a direct
+context with llvmpipe will fail because you don't have
+ARB_texture_float, and the internal fallback to an indirect context will
+fail because indirect only supports through 1.4. So the server will
+throw GLXBadFBConfig at you to say "I don't support core contexts",
+which we should interpret as a skip not a failure.
+
+Signed-off-by: Adam Jackson <ajax@redhat.com>
+---
+ test/glx_public_api_core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/test/glx_public_api_core.c b/test/glx_public_api_core.c
+index 83b9689..f5a4f04 100644
+--- a/test/glx_public_api_core.c
++++ b/test/glx_public_api_core.c
+@@ -131,6 +131,12 @@ test_glx_version(void)
+     return true;
+ }
+ 
++static int
++error_handler(Display *d, XErrorEvent *ev)
++{
++    return 0;
++}
++
+ int
+ main(int argc, char **argv)
+ {
+@@ -148,6 +154,7 @@ main(int argc, char **argv)
+         None
+     };
+     GLXContext ctx;
++    int (*old_handler)(Display *, XErrorEvent *);
+ 
+     dpy = get_display_or_skip();
+ 
+@@ -157,9 +164,12 @@ main(int argc, char **argv)
+     visinfo = get_glx_visual(dpy);
+     win = get_glx_window(dpy, visinfo, false);
+     config = get_fbconfig_for_visinfo(dpy, visinfo);
++
++    old_handler = XSetErrorHandler(error_handler);
+     ctx = glXCreateContextAttribsARB(dpy, config, NULL, True, attribs);
+     if (ctx == None)
+         errx(77, "glXCreateContext failed");
++    XSetErrorHandler(old_handler);
+ 
+     glXMakeCurrent(dpy, win, ctx);
+ 
+-- 
+2.17.0
+
