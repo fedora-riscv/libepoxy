@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.5.1
-Release: 2%{?dist}
+Version: 1.5.2
+Release: 1%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -13,9 +13,6 @@ BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(glesv2)
 BuildRequires:  python3
 BuildRequires:  xorg-x11-server-Xvfb mesa-dri-drivers
-
-# https://github.com/anholt/libepoxy/pull/167
-Patch0: 0001-test-glx_public_api_core-Fail-softer-if-core-context.patch
 
 %description
 A library for handling OpenGL function pointer management.
@@ -57,6 +54,9 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Sun May 20 2018 Kalev Lember <klember@redhat.com> - 1.5.2-1
+- Update to 1.5.2
+
 * Wed Apr 25 2018 Adam Jackson <ajax@redhat.com> - 1.5.1-2
 - Enable tests for all arches
 - Run tests against Xvfb so we get plausible amounts of coverage
