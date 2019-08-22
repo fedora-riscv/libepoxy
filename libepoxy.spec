@@ -18,8 +18,11 @@ Patch1: libepoxy-1.5.3-pkgconfig_drop_private_gl.patch
 
 BuildRequires:  meson
 BuildRequires:  gcc
-BuildRequires:  pkgconfig(gl)
-BuildRequires:  pkgconfig(egl)
+# Until patch1 is no longer needed, don't rely on pkgconfig
+#BuildRequires:  pkgconfig(gl)
+#BuildRequires:  pkgconfig(egl)
+BuildRequires: libGL-devel
+BuildRequires: libEGL-devel
 BuildRequires:  pkgconfig(glesv2)
 BuildRequires:  python3
 BuildRequires:  xorg-x11-server-Xvfb mesa-dri-drivers
