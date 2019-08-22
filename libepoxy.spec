@@ -1,10 +1,20 @@
 Summary: epoxy runtime library
 Name: libepoxy
 Version: 1.5.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+# WORKAROUND: non-upstreamable patch to drop
+# Requires.private: gl egl
+# since mesa recently droppg egl.pc from packaging.  Works only
+# beause fedora installs everything into prefix that's already
+# included by default (why it's not upstreamable).
+# see also:
+# libepoxy: https://bugzilla.redhat.com/show_bug.cgi?id=1744320
+# mesa: https://bugzilla.redhat.com/show_bug.cgi?id=1744292
+Patch1: libepoxy-1.5.3-pkgconfig_drop_private_gl.patch
 
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -20,6 +30,10 @@ A library for handling OpenGL function pointer management.
 %package devel
 Summary: Development files for libepoxy
 Requires: %{name}%{?_isa} = %{version}-%{release}
+# manually add header dependencies instead of relying on pkgconfig deps
+# see patch1
+Requires: libGL-devel
+Requires: libEGL-devel
 
 %description devel
 This package contains libraries and header files for
@@ -54,6 +68,9 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Thu Aug 22 2019 Rex Dieter <rdieter@fedoraproject.org> - 1.5.3-4
+- epoxy.pc: -Requires.private: gl egl (#1744320)
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
