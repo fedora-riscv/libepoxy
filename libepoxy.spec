@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.5.3
-Release: 5%{?dist}
+Version: 1.5.4
+Release: 1%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -57,6 +57,9 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Wed Nov 27 2019 Kalev Lember <klember@redhat.com> - 1.5.4-1
+- Update to 1.5.4
+
 * Fri Oct 25 2019 Peter Robinson <pbrobinson@gmail.com> - 1.5.3-5
 - Rebuild for libglvnd 1.2, drop work-arounds
 
