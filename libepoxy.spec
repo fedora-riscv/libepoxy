@@ -1,14 +1,10 @@
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.5.6
+Version: 1.5.7
 Release: 1%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
-
-# Backported from upstream
-# https://github.com/anholt/libepoxy/pull/250
-Patch0: 250.patch
 
 BuildRequires: meson
 BuildRequires: gcc
@@ -59,6 +55,9 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Fri Apr 30 2021 Kalev Lember <klember@redhat.com> - 1.5.7-1
+- Update to 1.5.7
+
 * Fri Apr 30 2021 Kalev Lember <klember@redhat.com> - 1.5.6-1
 - Update to 1.5.6
 - Remove ldconfig_scriptlets use
