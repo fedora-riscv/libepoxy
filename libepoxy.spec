@@ -1,7 +1,7 @@
 Summary: epoxy runtime library
 Name: libepoxy
-Version: 1.5.5
-Release: 2%{?dist}
+Version: 1.5.6
+Release: 1%{?dist}
 License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -57,6 +57,9 @@ xvfb-run -d -s "-screen 0 640x480x24" ninja -C %{_vpath_builddir} test || \
 %{_libdir}/pkgconfig/epoxy.pc
 
 %changelog
+* Fri Apr 30 2021 Kalev Lember <klember@redhat.com> - 1.5.6-1
+- Update to 1.5.6
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
