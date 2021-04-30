@@ -6,6 +6,10 @@ License: MIT
 URL: https://github.com/anholt/libepoxy
 Source0: %{url}/releases/download/%{version}/%{name}-%{version}.tar.xz
 
+# Backported from upstream
+# https://github.com/anholt/libepoxy/pull/250
+Patch0: 250.patch
+
 BuildRequires: meson
 BuildRequires: gcc
 BuildRequires: pkgconfig(gl)
